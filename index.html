@@ -4,92 +4,138 @@
   <title>KBTiers</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial;
-      background: #0f172a;
+      background: #0b0f1a;
       color: white;
-      text-align: center;
     }
 
-    h1 { color: #38bdf8; }
+    header {
+      padding: 15px;
+      text-align: center;
+      background: #111827;
+      font-size: 24px;
+      font-weight: bold;
+      color: #38bdf8;
+    }
+
+    .container {
+      padding: 20px;
+    }
 
     .tier {
       display: flex;
-      align-items: center;
-      margin: 10px;
-      padding: 10px;
-      border-radius: 10px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      overflow: hidden;
     }
 
-    .label {
+    .tier-label {
       width: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
+      font-size: 20px;
     }
 
     .dropzone {
       flex: 1;
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
       padding: 10px;
-      min-height: 60px;
-      border: 2px dashed #444;
+      gap: 8px;
+      background: #1f2937;
+      min-height: 70px;
     }
 
     .item {
-      padding: 8px;
-      background: #1e293b;
-      border-radius: 5px;
+      width: 60px;
+      height: 60px;
+      background: #374151;
+      border-radius: 6px;
       cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
     }
 
     .pool {
       margin-top: 20px;
+      background: #111827;
       padding: 10px;
-      border: 2px solid #555;
+      border-radius: 6px;
     }
+
+    .pool h2 {
+      margin: 0 0 10px;
+    }
+
+    /* Tier colors */
+    .s { background: #ef4444; }
+    .a { background: #f97316; }
+    .b { background: #eab308; }
+    .c { background: #22c55e; }
+    .d { background: #3b82f6; }
   </style>
 </head>
 
 <body>
-  <h1>🔥 KBTiers 🔥</h1>
 
-  <div class="tier" style="background:#ff4d4d;">
-    <div class="label">S</div>
+<header>🔥 KBTiers 🔥</header>
+
+<div class="container">
+
+  <div class="tier">
+    <div class="tier-label s">S</div>
     <div class="dropzone"></div>
   </div>
 
-  <div class="tier" style="background:#ff944d;">
-    <div class="label">A</div>
+  <div class="tier">
+    <div class="tier-label a">A</div>
     <div class="dropzone"></div>
   </div>
 
-  <div class="tier" style="background:#ffd24d;">
-    <div class="label">B</div>
+  <div class="tier">
+    <div class="tier-label b">B</div>
     <div class="dropzone"></div>
   </div>
 
-  <h2>Drag from here 👇</h2>
-  <div class="pool dropzone">
-    <div class="item" draggable="true">Player1</div>
-    <div class="item" draggable="true">Player2</div>
-    <div class="item" draggable="true">Player3</div>
+  <div class="tier">
+    <div class="tier-label c">C</div>
+    <div class="dropzone"></div>
   </div>
+
+  <div class="tier">
+    <div class="tier-label d">D</div>
+    <div class="dropzone"></div>
+  </div>
+
+  <div class="pool">
+    <h2>Players</h2>
+    <div class="dropzone">
+      <div class="item" draggable="true">P1</div>
+      <div class="item" draggable="true">P2</div>
+      <div class="item" draggable="true">P3</div>
+      <div class="item" draggable="true">P4</div>
+    </div>
+  </div>
+
+</div>
 
 <script>
 let dragged;
 
 document.querySelectorAll('.item').forEach(item => {
-  item.addEventListener('dragstart', e => {
-    dragged = item;
-  });
+  item.addEventListener('dragstart', () => dragged = item);
 });
 
 document.querySelectorAll('.dropzone').forEach(zone => {
-  zone.addEventListener('dragover', e => {
-    e.preventDefault();
-  });
+  zone.addEventListener('dragover', e => e.preventDefault());
 
-  zone.addEventListener('drop', e => {
-    zone.appendChild(dragged);
+  zone.addEventListener('drop', () => {
+    if (dragged) zone.appendChild(dragged);
   });
 });
 </script>
