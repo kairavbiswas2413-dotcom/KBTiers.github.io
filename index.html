@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>KBTiers</title>
+  <title>KBTiers Pro</title>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -18,80 +20,136 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
       padding: 20px;
     }
 
-    .player {
-      background: #111827;
-      padding: 15px;
-      margin-bottom: 15px;
+    .tier {
+      display: flex;
+      margin: 8px 0;
       border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #222;
     }
 
-    .title {
-      font-size: 18px;
+    .label {
+      width: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
+      background: #111827;
     }
 
-    .region {
-      color: #aaa;
-      margin-bottom: 10px;
-      font-size: 13px;
+    .dropzone {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px;
+      min-height: 55px;
+      background: #1f2937;
     }
 
-    .line {
-      margin: 5px 0;
+    .card {
+      background: #111;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
     }
 
-    .HT {
-      color: #ff4d4d;
-      font-weight: bold;
+    .card img {
+      width: 22px;
+      border-radius: 4px;
     }
 
-    .LT {
-      color: #22c55e;
-      font-weight: bold;
-    }
+    .HT1 { background:#ef4444; }
+    .LT1 { background:#f97316; }
+    .HT2 { background:#f59e0b; }
+    .LT2 { background:#eab308; }
+    .HT3 { background:#22c55e; }
+    .LT3 { background:#10b981; }
+    .HT4 { background:#3b82f6; }
+    .LT4 { background:#6366f1; }
+    .HT5 { background:#8b5cf6; }
+    .LT5 { background:#a855f7; }
+
   </style>
 </head>
 
 <body>
 
-<header>🏆 KBTiers Rankings</header>
+<header>🏆 KBTiers Pro</header>
 
-<div class="container">
+<div class="container" id="tiers"></div>
 
-  <!-- KairavOP -->
-  <div class="player">
-    <div class="title">KairavOP</div>
-    <div class="region">AS</div>
+<script>
+const tiers = ["HT1","LT1","HT2","LT2","HT3","LT3","HT4","LT4","HT5","LT5"];
 
-    <div class="line">Nethpot - <span class="HT">HT4</span></div>
-    <div class="line">Sword - <span class="LT">LT4</span></div>
-    <div class="line">UHC - <span class="HT">HT5</span></div>
-    <div class="line">Axe - <span class="HT">HT4</span></div>
-    <div class="line">Mace - <span class="LT">LT3</span></div>
-    <div class="line">Vanilla - <span class="HT">HT4</span></div>
-    <div class="line">SMP - <span class="HT">HT5</span></div>
-  </div>
+let players = JSON.parse(localStorage.getItem("kbtiers")) || [
+  {name:"KairavOP", img:"https://mc-heads.net/avatar/KairavOP", tier:"HT4"},
+  {name:"NoxisCraft", img:"https://mc-heads.net/avatar/NoxisCraft", tier:"LT4"},
+  {name:"Dexo_mine", img:"https://i.imgur.com/yourimage.png", tier:"HT4"},
+  {name:"iambishnu6451", img:"https://i.imgur.com/yourimage.png", tier:"LT5"},
+  {name:"akashsonu", img:"https://i.imgur.com/yourimage.png", tier:"LT4"}
+];
 
-  <!-- NoxisCraft -->
-  <div class="player">
-    <div class="title">NoxisCraft</div>
-    <div class="region">AS</div>
+function save() {
+  localStorage.setItem("kbtiers", JSON.stringify(players));
+}
 
-    <div class="line">Nethpot - <span class="LT">LT4</span></div>
-    <div class="line">Sword - <span class="HT">HT5</span></div>
-    <div class="line">UHC - —</div>
-    <div class="line">Axe - —</div>
-    <div class="line">Mace - —</div>
-    <div class="line">Vanilla - —</div>
-    <div class="line">SMP - —</div>
-  </div>
+function render() {
+  const container = document.getElementById("tiers");
+  container.innerHTML = "";
 
-</div>
+  tiers.forEach(t => {
+    const row = document.createElement("div");
+    row.className = "tier";
+
+    row.innerHTML = `
+      <div class="label ${t}">${t}</div>
+      <div class="dropzone" id="${t}"></div>
+    `;
+
+    container.appendChild(row);
+  });
+
+  players.forEach(p => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `<img src="${p.img}"> ${p.name}`;
+    document.getElementById(p.tier).appendChild(el);
+  });
+
+  enableDrag();
+}
+
+function enableDrag() {
+  document.querySelectorAll(".dropzone").forEach(zone => {
+    new Sortable(zone, {
+      group: "tiers",
+      animation: 150,
+      onAdd: function(evt) {
+        const name = evt.item.innerText.trim();
+        const newTier = evt.to.id;
+
+        players.forEach(p => {
+          if(p.name === name) p.tier = newTier;
+        });
+
+        save();
+      }
+    });
+  });
+}
+
+render();
+</script>
 
 </body>
 </html>
