@@ -44,7 +44,7 @@
       padding: 20px;
     }
 
-    /* 🔍 SEARCH BAR WITH ICON */
+    /* SEARCH */
     .search-wrap {
       position: relative;
       width: 100%;
@@ -66,7 +66,6 @@
       right: 12px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 16px;
       opacity: 0.7;
       pointer-events: none;
     }
@@ -76,7 +75,6 @@
       display: flex;
       flex-wrap: nowrap;
       justify-content: space-between;
-      align-items: center;
       gap: 10px;
       margin-bottom: 18px;
       padding: 10px;
@@ -104,6 +102,7 @@
       transform: scale(1.05);
     }
 
+    /* TABLE */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -126,6 +125,7 @@
 
     tr:hover {
       background: rgba(31,41,55,0.6);
+      cursor: pointer;
     }
 
     .player {
@@ -138,25 +138,93 @@
       color: #9ca3af;
       margin-top: 3px;
     }
+
+    /* BADGES */
+    .HT {
+      color: #ef4444;
+      font-weight: bold;
+    }
+
+    .LT {
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: #0b1220;
+      width: 340px;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #222;
+      text-align: center;
+      animation: pop 0.2s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-content h2 {
+      margin: 0;
+    }
+
+    .modal-content p {
+      color: #9ca3af;
+      margin: 5px 0 15px;
+    }
+
+    .modal-tiers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      cursor: pointer;
+      font-size: 20px;
+    }
   </style>
 </head>
 
 <body>
 
-<a href="https://discord.gg/n7cBmDQNX6" target="_blank" class="discord-btn">
-  Discord
-</a>
+<a href="https://discord.gg/n7cBmDQNX6" target="_blank" class="discord-btn">Discord</a>
 
 <header>KBTiers Rankings</header>
 
 <div class="container">
 
-<!-- 🔍 SEARCH WITH ICON -->
+<!-- SEARCH -->
 <div class="search-wrap">
   <input class="search-box" id="searchInput" placeholder="Search player..." onkeyup="searchPlayer()">
   <span class="search-icon">🔍</span>
 </div>
 
+<!-- GAMEMODES -->
 <div class="gm-bar">
   <button class="gm-btn" onclick="showMode('all')">All</button>
   <button class="gm-btn" onclick="showMode('Vanilla')">Vanilla</button>
@@ -188,49 +256,46 @@
 
 <tbody>
 
-<tr>
+<tr onclick="openModal(this)">
   <td><div class="player">KairavOP</div><span class="points">170 pts</span></td>
   <td>AS</td>
-  <td>HT4</td>
-  <td>HT5</td>
+  <td><span class="HT">HT4</span></td>
+  <td><span class="HT">HT5</span></td>
   <td>-</td>
-  <td>HT4</td>
-  <td>HT5</td>
-  <td>LT4</td>
-  <td>HT4</td>
-  <td>LT3</td>
+  <td><span class="HT">HT4</span></td>
+  <td><span class="HT">HT5</span></td>
+  <td><span class="LT">LT4</span></td>
+  <td><span class="HT">HT4</span></td>
+  <td><span class="LT">LT3</span></td>
 </tr>
 
-<tr>
+<tr onclick="openModal(this)">
   <td><div class="player">NoxisCraft</div><span class="points">55 pts</span></td>
   <td>AS</td>
   <td>-</td>
   <td>-</td>
   <td>-</td>
-  <td>LT4</td>
+  <td><span class="LT">LT4</span></td>
   <td>-</td>
-  <td>HT5</td>
-  <td>-</td>
-  <td>-</td>
-</tr>
-
-<tr>
-  <td><div class="player">Dexo_mine</div><span class="points">50 pts</span></td>
-  <td>AS</td>
-  <td>HT4</td>
+  <td><span class="HT">HT5</span></td>
   <td>-</td>
   <td>-</td>
-  <td>-</td>
-  <td>-</td>
-  <td>-</td>
-  <td>-</td>
-  <td>LT4</td>
 </tr>
 
 </tbody>
 
 </table>
 
+</div>
+
+<!-- MODAL -->
+<div id="playerModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2 id="modalName"></h2>
+    <p id="modalRegion"></p>
+    <div id="modalTiers" class="modal-tiers"></div>
+  </div>
 </div>
 
 <script>
@@ -245,8 +310,7 @@ function searchPlayer() {
 }
 
 function showMode(mode) {
-  let table = document.getElementById("tierTable");
-  let rows = table.rows;
+  let rows = document.querySelectorAll("#tierTable tbody tr");
 
   let map = {
     "Vanilla": 2,
@@ -261,23 +325,60 @@ function showMode(mode) {
 
   let cols = [2,3,4,5,6,7,8,9];
 
-  if (mode === "all") {
-    for (let i = 0; i < rows.length; i++) {
+  rows.forEach(row => {
+
+    if (mode === "all") {
+      row.style.display = "";
       cols.forEach(c => {
-        if (rows[i].cells[c]) rows[i].cells[c].style.display = "";
+        if (row.cells[c]) row.cells[c].style.display = "";
       });
+      return;
     }
-    return;
-  }
 
-  let showCol = map[mode];
+    let col = map[mode];
+    let cell = row.cells[col];
 
-  for (let i = 0; i < rows.length; i++) {
+    if (!cell || cell.innerText.trim() === "-" ) {
+      row.style.display = "none";
+      return;
+    }
+
+    row.style.display = "";
+
     cols.forEach(c => {
-      if (!rows[i].cells[c]) return;
-      rows[i].cells[c].style.display = (c === showCol) ? "" : "none";
+      if (row.cells[c]) {
+        row.cells[c].style.display = (c === col) ? "" : "none";
+      }
     });
+  });
+}
+
+/* MODAL */
+function openModal(row) {
+  let cells = row.cells;
+
+  document.getElementById("playerModal").style.display = "block";
+  document.getElementById("modalName").innerText =
+    row.querySelector(".player").innerText;
+
+  document.getElementById("modalRegion").innerText =
+    "Region - " + cells[1].innerText;
+
+  let gm = ["Vanilla","UHC","POT","Nethpot","SMP","Sword","Axe","Mace"];
+  let html = "";
+
+  for (let i = 0; i < gm.length; i++) {
+    let val = cells[i+2].innerText.trim();
+    if (val !== "-" && val !== "") {
+      html += `<div>${gm[i]}  ${val}</div>`;
+    }
   }
+
+  document.getElementById("modalTiers").innerHTML = html;
+}
+
+function closeModal() {
+  document.getElementById("playerModal").style.display = "none";
 }
 </script>
 
