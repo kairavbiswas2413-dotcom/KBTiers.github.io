@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>KBTiers</title>
+  <title>KBTiers Rankings</title>
   <style>
     body {
       margin: 0;
@@ -11,131 +11,122 @@
     }
 
     header {
+      background: #111827;
       padding: 15px;
       text-align: center;
-      background: #111827;
       font-size: 24px;
-      font-weight: bold;
       color: #38bdf8;
+      font-weight: bold;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px;
+      background: #1f2937;
+    }
+
+    .tab {
+      padding: 8px 15px;
+      background: #374151;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .tab:hover {
+      background: #4b5563;
     }
 
     .container {
       padding: 20px;
+      max-width: 900px;
+      margin: auto;
     }
 
-    .tier {
-      display: flex;
-      margin-bottom: 8px;
-      border-radius: 6px;
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: none;
+      background: #1f2937;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #111827;
+      border-radius: 8px;
       overflow: hidden;
     }
 
-    .tier-label {
-      width: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 20px;
+    th, td {
+      padding: 12px;
+      text-align: left;
     }
 
-    .dropzone {
-      flex: 1;
-      display: flex;
-      flex-wrap: wrap;
-      padding: 10px;
-      gap: 8px;
+    th {
       background: #1f2937;
-      min-height: 70px;
+      color: #9ca3af;
     }
 
-    .item {
-      width: 60px;
-      height: 60px;
-      background: #374151;
-      border-radius: 6px;
-      cursor: grab;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
+    tr:nth-child(even) {
+      background: #1f2937;
     }
 
-    .pool {
-      margin-top: 20px;
-      background: #111827;
-      padding: 10px;
-      border-radius: 6px;
+    .rank {
+      color: #38bdf8;
+      font-weight: bold;
     }
-
-    .pool h2 {
-      margin: 0 0 10px;
-    }
-
-    /* Tier colors */
-    .s { background: #ef4444; }
-    .a { background: #f97316; }
-    .b { background: #eab308; }
-    .c { background: #22c55e; }
-    .d { background: #3b82f6; }
   </style>
 </head>
 
 <body>
 
-<header>🔥 KBTiers 🔥</header>
+<header>🏆 KBTiers Rankings</header>
+
+<div class="tabs">
+  <div class="tab">Overall</div>
+  <div class="tab">Vanilla</div>
+  <div class="tab">UHC</div>
+  <div class="tab">Pot</div>
+</div>
 
 <div class="container">
 
-  <div class="tier">
-    <div class="tier-label s">S</div>
-    <div class="dropzone"></div>
-  </div>
+  <input type="text" id="search" placeholder="Search player...">
 
-  <div class="tier">
-    <div class="tier-label a">A</div>
-    <div class="dropzone"></div>
-  </div>
-
-  <div class="tier">
-    <div class="tier-label b">B</div>
-    <div class="dropzone"></div>
-  </div>
-
-  <div class="tier">
-    <div class="tier-label c">C</div>
-    <div class="dropzone"></div>
-  </div>
-
-  <div class="tier">
-    <div class="tier-label d">D</div>
-    <div class="dropzone"></div>
-  </div>
-
-  <div class="pool">
-    <h2>Players</h2>
-    <div class="dropzone">
-      <div class="item" draggable="true">P1</div>
-      <div class="item" draggable="true">P2</div>
-      <div class="item" draggable="true">P3</div>
-      <div class="item" draggable="true">P4</div>
-    </div>
-  </div>
+  <table id="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Player</th>
+        <th>Region</th>
+        <th>Tier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="rank">1</td><td>PlayerOne</td><td>NA</td><td>Tier 1</td></tr>
+      <tr><td class="rank">2</td><td>PlayerTwo</td><td>EU</td><td>Tier 1</td></tr>
+      <tr><td class="rank">3</td><td>PlayerThree</td><td>ASIA</td><td>Tier 2</td></tr>
+      <tr><td class="rank">4</td><td>PlayerFour</td><td>NA</td><td>Tier 2</td></tr>
+    </tbody>
+  </table>
 
 </div>
 
 <script>
-let dragged;
+const search = document.getElementById("search");
+const rows = document.querySelectorAll("#table tbody tr");
 
-document.querySelectorAll('.item').forEach(item => {
-  item.addEventListener('dragstart', () => dragged = item);
-});
+search.addEventListener("keyup", function() {
+  const value = search.value.toLowerCase();
 
-document.querySelectorAll('.dropzone').forEach(zone => {
-  zone.addEventListener('dragover', e => e.preventDefault());
-
-  zone.addEventListener('drop', () => {
-    if (dragged) zone.appendChild(dragged);
+  rows.forEach(row => {
+    const name = row.children[1].textContent.toLowerCase();
+    row.style.display = name.includes(value) ? "" : "none";
   });
 });
 </script>
