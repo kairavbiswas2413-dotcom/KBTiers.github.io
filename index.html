@@ -7,15 +7,35 @@
     body {
       margin: 0;
       font-family: Arial;
-      background: #0b0f1a;
+      background: radial-gradient(circle at top, #111827, #0b0f1a);
       color: white;
     }
 
     header {
-      padding: 15px;
-      font-size: 22px;
-      border-bottom: 1px solid #222;
+      padding: 18px;
+      font-size: 24px;
       text-align: center;
+      border-bottom: 1px solid #222;
+    }
+
+    .discord-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #1e3a8a;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      border: 1px solid #0f172a;
+      transition: 0.2s;
+    }
+
+    .discord-btn:hover {
+      background: #2563eb;
+      transform: scale(1.05);
     }
 
     .container {
@@ -24,87 +44,119 @@
       padding: 20px;
     }
 
+    /* 🔍 SEARCH BAR WITH ICON */
+    .search-wrap {
+      position: relative;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
     .search-box {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
+      padding: 12px 40px 12px 12px;
       border: 1px solid #222;
-      background: #111827;
+      background: rgba(17,24,39,0.7);
       color: white;
-      border-radius: 6px;
+      border-radius: 10px;
       outline: none;
     }
 
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    /* BUTTON BAR */
     .gm-bar {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px;
+      background: rgba(17,24,39,0.3);
+      border: 1px solid #222;
+      border-radius: 12px;
+      overflow-x: auto;
     }
 
     .gm-btn {
-      background: #111827;
+      background: rgba(17,24,39,0.9);
+      border: 1px solid #333;
       color: white;
-      border: 1px solid #222;
-      padding: 6px 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
       cursor: pointer;
-      border-radius: 6px;
       font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+      transition: 0.2s;
     }
 
     .gm-btn:hover {
       background: #1f2937;
+      transform: scale(1.05);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      background: rgba(17,24,39,0.5);
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     th, td {
-      padding: 10px;
-      border-bottom: 1px solid #222;
+      padding: 12px;
       text-align: center;
+      border-bottom: 1px solid #222;
       font-size: 13px;
     }
 
     th {
       color: #aaa;
-      font-weight: normal;
+      background: rgba(17,24,39,0.8);
     }
 
     tr:hover {
-      background: #111827;
+      background: rgba(31,41,55,0.6);
     }
 
-    .HT {
-      color: #ff4d4d;
+    .player {
       font-weight: bold;
     }
 
-    .LT {
-      color: #22c55e;
-      font-weight: bold;
+    .points {
+      display: block;
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 3px;
     }
   </style>
 </head>
 
 <body>
 
+<a href="https://discord.gg/n7cBmDQNX6" target="_blank" class="discord-btn">
+  Discord
+</a>
+
 <header>KBTiers Rankings</header>
 
 <div class="container">
 
-<!-- SEARCH -->
-<input 
-  type="text" 
-  class="search-box" 
-  id="searchInput" 
-  placeholder="Search player..."
-  onkeyup="searchPlayer()"
-/>
+<!-- 🔍 SEARCH WITH ICON -->
+<div class="search-wrap">
+  <input class="search-box" id="searchInput" placeholder="Search player..." onkeyup="searchPlayer()">
+  <span class="search-icon">🔍</span>
+</div>
 
-<!-- GAMEMODE VIEWER -->
 <div class="gm-bar">
   <button class="gm-btn" onclick="showMode('all')">All</button>
   <button class="gm-btn" onclick="showMode('Vanilla')">Vanilla</button>
@@ -120,48 +172,59 @@
 <table id="tierTable">
 
 <thead>
-  <tr>
-    <th>Player</th>
-    <th>Region</th>
-    <th>Vanilla</th>
-    <th>UHC</th>
-    <th>POT</th>
-    <th>Nethpot</th>
-    <th>SMP</th>
-    <th>Sword</th>
-    <th>Axe</th>
-    <th>Mace</th>
-  </tr>
+<tr>
+  <th>Player</th>
+  <th>Region</th>
+  <th>Vanilla</th>
+  <th>UHC</th>
+  <th>POT</th>
+  <th>Nethpot</th>
+  <th>SMP</th>
+  <th>Sword</th>
+  <th>Axe</th>
+  <th>Mace</th>
+</tr>
 </thead>
 
 <tbody>
 
 <tr>
-  <td>KairavOP</td>
+  <td><div class="player">KairavOP</div><span class="points">170 pts</span></td>
   <td>AS</td>
-
-  <td>Vanilla - <span class="HT">HT4</span></td>
-  <td>UHC - <span class="HT">HT5</span></td>
-  <td>POT - -</td>
-  <td>Nethpot - <span class="HT">HT4</span></td>
-  <td>SMP - <span class="HT">HT5</span></td>
-  <td>Sword - <span class="LT">LT4</span></td>
-  <td>Axe - <span class="HT">HT4</span></td>
-  <td>Mace - <span class="LT">LT3</span></td>
+  <td>HT4</td>
+  <td>HT5</td>
+  <td>-</td>
+  <td>HT4</td>
+  <td>HT5</td>
+  <td>LT4</td>
+  <td>HT4</td>
+  <td>LT3</td>
 </tr>
 
 <tr>
-  <td>NoxisCraft</td>
+  <td><div class="player">NoxisCraft</div><span class="points">55 pts</span></td>
   <td>AS</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>LT4</td>
+  <td>-</td>
+  <td>HT5</td>
+  <td>-</td>
+  <td>-</td>
+</tr>
 
-  <td>Vanilla - -</td>
-  <td>UHC - -</td>
-  <td>POT - -</td>
-  <td>Nethpot - <span class="LT">LT4</span></td>
-  <td>SMP - -</td>
-  <td>Sword - <span class="HT">HT5</span></td>
-  <td>Axe - -</td>
-  <td>Mace - -</td>
+<tr>
+  <td><div class="player">Dexo_mine</div><span class="points">50 pts</span></td>
+  <td>AS</td>
+  <td>HT4</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>LT4</td>
 </tr>
 
 </tbody>
@@ -172,37 +235,48 @@
 
 <script>
 function searchPlayer() {
-  let input = document.getElementById("searchInput");
-  let filter = input.value.toLowerCase();
-  let table = document.getElementById("tierTable");
-  let rows = table.getElementsByTagName("tr");
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let rows = document.querySelectorAll("#tierTable tbody tr");
 
-  for (let i = 1; i < rows.length; i++) {
-    let td = rows[i].getElementsByTagName("td")[0];
-    if (td) {
-      let text = td.textContent || td.innerText;
-      rows[i].style.display = text.toLowerCase().includes(filter) ? "" : "none";
-    }
-  }
+  rows.forEach(row => {
+    let name = row.querySelector(".player").innerText.toLowerCase();
+    row.style.display = name.includes(input) ? "" : "none";
+  });
 }
 
 function showMode(mode) {
   let table = document.getElementById("tierTable");
-  let rows = table.getElementsByTagName("tr");
+  let rows = table.rows;
 
-  for (let i = 1; i < rows.length; i++) {
-    let cells = rows[i].getElementsByTagName("td");
+  let map = {
+    "Vanilla": 2,
+    "UHC": 3,
+    "POT": 4,
+    "Nethpot": 5,
+    "SMP": 6,
+    "Sword": 7,
+    "Axe": 8,
+    "Mace": 9
+  };
 
-    if (mode === "all") {
-      for (let j = 2; j < cells.length; j++) {
-        cells[j].style.display = "";
-      }
-    } else {
-      for (let j = 2; j < cells.length; j++) {
-        let text = cells[j].innerText;
-        cells[j].style.display = text.includes(mode) ? "" : "none";
-      }
+  let cols = [2,3,4,5,6,7,8,9];
+
+  if (mode === "all") {
+    for (let i = 0; i < rows.length; i++) {
+      cols.forEach(c => {
+        if (rows[i].cells[c]) rows[i].cells[c].style.display = "";
+      });
     }
+    return;
+  }
+
+  let showCol = map[mode];
+
+  for (let i = 0; i < rows.length; i++) {
+    cols.forEach(c => {
+      if (!rows[i].cells[c]) return;
+      rows[i].cells[c].style.display = (c === showCol) ? "" : "none";
+    });
   }
 }
 </script>
