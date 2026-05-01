@@ -1,8 +1,10 @@
-  vanilla.png
-  uhc.png
-  pot.png
-  nethpot.png
-  smp.png
-  sword.png
-  axe.png
-  mace.png
+const iconMap = {
+  vanilla: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9ayC7L9tC_W6YUFVEkMsG2dCKdq_CubYYUA&s",
+  uhc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICJqWQ7mKHHyVArbEQlBnvr1eEWUJogg5Mg&s",
+  pot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREXloStFYyijCy_DCe-jUt7Ay4RMmRF9D0Lw&s",
+  nethpot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr7xyaKLp5DkKJo8Nxyw9DmDWkKgQCrApAcQ&s",
+  smp: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIoQ65J2s4svfFIUmchnleHnRt-ni_1bawIw&s",
+  sword: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI36RjQ8y8859qayEpdkiP_7mDqwDxCL_ghQ&s",
+  axe: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQt_JLdk4xpgZuX8vgrih8FgqABQrAv6Qh0JA&s",
+  mace: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrCQkoNmXEXjd5_dPY9tz3uQLY8KOIe9EGRA&s"
+};
