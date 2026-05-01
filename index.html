@@ -29,13 +29,6 @@
       text-decoration: none;
       font-size: 13px;
       font-weight: bold;
-      border: 1px solid #0f172a;
-      transition: 0.2s;
-    }
-
-    .discord-btn:hover {
-      background: #2563eb;
-      transform: scale(1.05);
     }
 
     .container {
@@ -44,7 +37,6 @@
       padding: 20px;
     }
 
-    /* SEARCH */
     .search-wrap {
       position: relative;
       width: 100%;
@@ -67,10 +59,8 @@
       top: 50%;
       transform: translateY(-50%);
       opacity: 0.7;
-      pointer-events: none;
     }
 
-    /* BUTTON BAR */
     .gm-bar {
       display: flex;
       flex-wrap: nowrap;
@@ -94,15 +84,8 @@
       font-size: 12px;
       font-weight: bold;
       white-space: nowrap;
-      transition: 0.2s;
     }
 
-    .gm-btn:hover {
-      background: #1f2937;
-      transform: scale(1.05);
-    }
-
-    /* TABLE */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -118,11 +101,6 @@
       font-size: 13px;
     }
 
-    th {
-      color: #aaa;
-      background: rgba(17,24,39,0.8);
-    }
-
     tr:hover {
       background: rgba(31,41,55,0.6);
       cursor: pointer;
@@ -136,18 +114,6 @@
       display: block;
       font-size: 11px;
       color: #9ca3af;
-      margin-top: 3px;
-    }
-
-    /* BADGES */
-    .HT {
-      color: #ef4444;
-      font-weight: bold;
-    }
-
-    .LT {
-      color: #22c55e;
-      font-weight: bold;
     }
 
     /* MODAL */
@@ -160,12 +126,6 @@
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.7);
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     .modal-content {
@@ -174,23 +134,8 @@
       margin: 10% auto;
       padding: 20px;
       border-radius: 12px;
-      border: 1px solid #222;
       text-align: center;
-      animation: pop 0.2s ease;
-    }
-
-    @keyframes pop {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .modal-content h2 {
-      margin: 0;
-    }
-
-    .modal-content p {
-      color: #9ca3af;
-      margin: 5px 0 15px;
+      position: relative;
     }
 
     .modal-tiers {
@@ -202,17 +147,17 @@
 
     .close {
       position: absolute;
-      right: 10px;
-      top: 5px;
+      right: 12px;
+      top: 8px;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 22px;
     }
   </style>
 </head>
 
 <body>
 
-<a href="https://discord.gg/n7cBmDQNX6" target="_blank" class="discord-btn">Discord</a>
+<a href="https://discord.gg/n7cBmDQNX6" class="discord-btn">Discord</a>
 
 <header>KBTiers Rankings</header>
 
@@ -256,28 +201,72 @@
 
 <tbody>
 
-<tr onclick="openModal(this)">
-  <td><div class="player">KairavOP</div><span class="points">170 pts</span></td>
+<!-- KairavOP -->
+<tr>
+  <td class="player">KairavOP <span class="points">210 pts</span></td>
   <td>AS</td>
-  <td><span class="HT">HT4</span></td>
-  <td><span class="HT">HT5</span></td>
-  <td>-</td>
-  <td><span class="HT">HT4</span></td>
-  <td><span class="HT">HT5</span></td>
-  <td><span class="LT">LT4</span></td>
-  <td><span class="HT">HT4</span></td>
-  <td><span class="LT">LT3</span></td>
+  <td>HT4</td>
+  <td>LT4</td>
+  <td>LT4</td>
+  <td>HT4</td>
+  <td>LT4</td>
+  <td>LT4</td>
+  <td>HT4</td>
+  <td>LT3</td>
 </tr>
 
-<tr onclick="openModal(this)">
-  <td><div class="player">NoxisCraft</div><span class="points">55 pts</span></td>
+<!-- NoxisCraft -->
+<tr>
+  <td class="player">NoxisCraft <span class="points">205 pts</span></td>
+  <td>AS</td>
+  <td>LT5</td>
+  <td>HT4</td>
+  <td>HT5</td>
+  <td>HT5</td>
+  <td>HT5</td>
+  <td>HT4</td>
+  <td>HT5</td>
+  <td>HT5</td>
+</tr>
+
+<!-- Dexo_mine -->
+<tr>
+  <td class="player">Dexo_mine <span class="points">50 pts</span></td>
+  <td>AS</td>
+  <td>HT4</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>LT4</td>
+</tr>
+
+<!-- iambishnu6451 -->
+<tr>
+  <td class="player">iambishnu6451 <span class="points">5 pts</span></td>
   <td>AS</td>
   <td>-</td>
   <td>-</td>
   <td>-</td>
-  <td><span class="LT">LT4</span></td>
   <td>-</td>
-  <td><span class="HT">HT5</span></td>
+  <td>-</td>
+  <td>LT5</td>
+  <td>-</td>
+  <td>-</td>
+</tr>
+
+<!-- akashsonu -->
+<tr>
+  <td class="player">akashsonu <span class="points">30 pts</span></td>
+  <td>AS</td>
+  <td>LT4</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
+  <td>-</td>
   <td>-</td>
   <td>-</td>
 </tr>
@@ -301,9 +290,7 @@
 <script>
 function searchPlayer() {
   let input = document.getElementById("searchInput").value.toLowerCase();
-  let rows = document.querySelectorAll("#tierTable tbody tr");
-
-  rows.forEach(row => {
+  document.querySelectorAll("#tierTable tbody tr").forEach(row => {
     let name = row.querySelector(".player").innerText.toLowerCase();
     row.style.display = name.includes(input) ? "" : "none";
   });
@@ -313,14 +300,8 @@ function showMode(mode) {
   let rows = document.querySelectorAll("#tierTable tbody tr");
 
   let map = {
-    "Vanilla": 2,
-    "UHC": 3,
-    "POT": 4,
-    "Nethpot": 5,
-    "SMP": 6,
-    "Sword": 7,
-    "Axe": 8,
-    "Mace": 9
+    Vanilla:2,UHC:3,POT:4,Nethpot:5,
+    SMP:6,Sword:7,Axe:8,Mace:9
   };
 
   let cols = [2,3,4,5,6,7,8,9];
@@ -329,16 +310,13 @@ function showMode(mode) {
 
     if (mode === "all") {
       row.style.display = "";
-      cols.forEach(c => {
-        if (row.cells[c]) row.cells[c].style.display = "";
-      });
       return;
     }
 
     let col = map[mode];
     let cell = row.cells[col];
 
-    if (!cell || cell.innerText.trim() === "-" ) {
+    if (!cell || cell.innerText.trim() === "-") {
       row.style.display = "none";
       return;
     }
@@ -354,6 +332,20 @@ function showMode(mode) {
 }
 
 /* MODAL */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("#tierTable tbody tr").forEach(row => {
+    row.addEventListener("click", () => openModal(row));
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  document.getElementById("playerModal").addEventListener("click", e => {
+    if (e.target === document.getElementById("playerModal")) closeModal();
+  });
+});
+
 function openModal(row) {
   let cells = row.cells;
 
@@ -369,8 +361,8 @@ function openModal(row) {
 
   for (let i = 0; i < gm.length; i++) {
     let val = cells[i+2].innerText.trim();
-    if (val !== "-" && val !== "") {
-      html += `<div>${gm[i]}  ${val}</div>`;
+    if (val !== "-") {
+      html += `<div>${gm[i]} - ${val}</div>`;
     }
   }
 
