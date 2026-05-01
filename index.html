@@ -13,9 +13,9 @@
 
     header {
       padding: 15px;
-      text-align: center;
       font-size: 22px;
       border-bottom: 1px solid #222;
+      text-align: center;
     }
 
     .container {
@@ -24,45 +24,68 @@
       padding: 20px;
     }
 
+    .search-box {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #222;
+      background: #111827;
+      color: white;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .gm-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .gm-btn {
+      background: #111827;
+      color: white;
+      border: 1px solid #222;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .gm-btn:hover {
+      background: #1f2937;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #111827;
-      border-radius: 10px;
-      overflow: hidden;
     }
 
     th, td {
-      border: 1px solid #222;
       padding: 10px;
+      border-bottom: 1px solid #222;
       text-align: center;
       font-size: 13px;
     }
 
     th {
-      background: #0f172a;
       color: #aaa;
       font-weight: normal;
     }
 
-    td {
+    tr:hover {
       background: #111827;
     }
 
-    .gm-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid #333;
-      background: #111;
-      margin-right: 6px;
-      vertical-align: middle;
+    .HT {
+      color: #ff4d4d;
+      font-weight: bold;
     }
 
-    .HT { color: #ff4d4d; font-weight: bold; }
-    .LT { color: #22c55e; font-weight: bold; }
-
+    .LT {
+      color: #22c55e;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -72,58 +95,117 @@
 
 <div class="container">
 
-<table>
-  <thead>
-    <tr>
-      <th>Player</th>
-      <th>Region</th>
-      <th>Vanilla</th>
-      <th>UHC</th>
-      <th>POT</th>
-      <th>Nethpot</th>
-      <th>SMP</th>
-      <th>Sword</th>
-      <th>Axe</th>
-      <th>Mace</th>
-    </tr>
-  </thead>
+<!-- SEARCH -->
+<input 
+  type="text" 
+  class="search-box" 
+  id="searchInput" 
+  placeholder="Search player..."
+  onkeyup="searchPlayer()"
+/>
 
-  <tbody>
+<!-- GAMEMODE VIEWER -->
+<div class="gm-bar">
+  <button class="gm-btn" onclick="showMode('all')">All</button>
+  <button class="gm-btn" onclick="showMode('Vanilla')">Vanilla</button>
+  <button class="gm-btn" onclick="showMode('UHC')">UHC</button>
+  <button class="gm-btn" onclick="showMode('POT')">POT</button>
+  <button class="gm-btn" onclick="showMode('Nethpot')">Nethpot</button>
+  <button class="gm-btn" onclick="showMode('SMP')">SMP</button>
+  <button class="gm-btn" onclick="showMode('Sword')">Sword</button>
+  <button class="gm-btn" onclick="showMode('Axe')">Axe</button>
+  <button class="gm-btn" onclick="showMode('Mace')">Mace</button>
+</div>
 
-    <!-- KairavOP -->
-    <tr>
-      <td>KairavOP</td>
-      <td>AS</td>
+<table id="tierTable">
 
-      <td><img src="icons/vanilla.png" class="gm-icon"> HT4</td>
-      <td><img src="icons/uhc.png" class="gm-icon"> HT5</td>
-      <td><img src="icons/pot.png" class="gm-icon"> -</td>
-      <td><img src="icons/nethpot.png" class="gm-icon"> HT4</td>
-      <td><img src="icons/smp.png" class="gm-icon"> HT5</td>
-      <td><img src="icons/sword.png" class="gm-icon"> LT4</td>
-      <td><img src="icons/axe.png" class="gm-icon"> HT4</td>
-      <td><img src="icons/mace.png" class="gm-icon"> LT3</td>
-    </tr>
+<thead>
+  <tr>
+    <th>Player</th>
+    <th>Region</th>
+    <th>Vanilla</th>
+    <th>UHC</th>
+    <th>POT</th>
+    <th>Nethpot</th>
+    <th>SMP</th>
+    <th>Sword</th>
+    <th>Axe</th>
+    <th>Mace</th>
+  </tr>
+</thead>
 
-    <!-- NoxisCraft -->
-    <tr>
-      <td>NoxisCraft</td>
-      <td>AS</td>
+<tbody>
 
-      <td><img src="icons/vanilla.png" class="gm-icon"> -</td>
-      <td><img src="icons/uhc.png" class="gm-icon"> -</td>
-      <td><img src="icons/pot.png" class="gm-icon"> -</td>
-      <td><img src="icons/nethpot.png" class="gm-icon"> LT4</td>
-      <td><img src="icons/smp.png" class="gm-icon"> -</td>
-      <td><img src="icons/sword.png" class="gm-icon"> HT5</td>
-      <td><img src="icons/axe.png" class="gm-icon"> -</td>
-      <td><img src="icons/mace.png" class="gm-icon"> -</td>
-    </tr>
+<tr>
+  <td>KairavOP</td>
+  <td>AS</td>
 
-  </tbody>
+  <td>Vanilla - <span class="HT">HT4</span></td>
+  <td>UHC - <span class="HT">HT5</span></td>
+  <td>POT - -</td>
+  <td>Nethpot - <span class="HT">HT4</span></td>
+  <td>SMP - <span class="HT">HT5</span></td>
+  <td>Sword - <span class="LT">LT4</span></td>
+  <td>Axe - <span class="HT">HT4</span></td>
+  <td>Mace - <span class="LT">LT3</span></td>
+</tr>
+
+<tr>
+  <td>NoxisCraft</td>
+  <td>AS</td>
+
+  <td>Vanilla - -</td>
+  <td>UHC - -</td>
+  <td>POT - -</td>
+  <td>Nethpot - <span class="LT">LT4</span></td>
+  <td>SMP - -</td>
+  <td>Sword - <span class="HT">HT5</span></td>
+  <td>Axe - -</td>
+  <td>Mace - -</td>
+</tr>
+
+</tbody>
+
 </table>
 
 </div>
+
+<script>
+function searchPlayer() {
+  let input = document.getElementById("searchInput");
+  let filter = input.value.toLowerCase();
+  let table = document.getElementById("tierTable");
+  let rows = table.getElementsByTagName("tr");
+
+  for (let i = 1; i < rows.length; i++) {
+    let td = rows[i].getElementsByTagName("td")[0];
+    if (td) {
+      let text = td.textContent || td.innerText;
+      rows[i].style.display = text.toLowerCase().includes(filter) ? "" : "none";
+    }
+  }
+}
+
+function showMode(mode) {
+  let table = document.getElementById("tierTable");
+  let rows = table.getElementsByTagName("tr");
+
+  for (let i = 1; i < rows.length; i++) {
+    let cells = rows[i].getElementsByTagName("td");
+
+    if (mode === "all") {
+      for (let j = 2; j < cells.length; j++) {
+        cells[j].style.display = "";
+      }
+    } else {
+      for (let j = 2; j < cells.length; j++) {
+        let text = cells[j].innerText;
+        cells[j].style.display = text.includes(mode) ? "" : "none";
+      }
+    }
+  }
+}
+</script>
 
 </body>
 </html>
