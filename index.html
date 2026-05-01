@@ -29,6 +29,11 @@
       text-decoration: none;
       font-size: 13px;
       font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .discord-btn:hover {
+      transform: scale(1.1);
     }
 
     .container {
@@ -51,6 +56,11 @@
       color: white;
       border-radius: 10px;
       outline: none;
+      transition: 0.2s ease;
+    }
+
+    .search-box:focus {
+      box-shadow: 0 0 10px rgba(59,130,246,0.4);
     }
 
     .search-icon {
@@ -84,6 +94,12 @@
       font-size: 12px;
       font-weight: bold;
       white-space: nowrap;
+      transition: 0.2s ease;
+    }
+
+    .gm-btn:hover {
+      transform: scale(1.08);
+      background: #1f2937;
     }
 
     table {
@@ -101,7 +117,13 @@
       font-size: 13px;
     }
 
+    tr {
+      transition: 0.2s ease;
+      animation: fadeIn 0.3s ease;
+    }
+
     tr:hover {
+      transform: scale(1.01);
       background: rgba(31,41,55,0.6);
       cursor: pointer;
     }
@@ -136,6 +158,15 @@
       border-radius: 12px;
       text-align: center;
       position: relative;
+      animation: popIn 0.2s ease;
+    }
+
+    .close {
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      cursor: pointer;
+      font-size: 22px;
     }
 
     .modal-tiers {
@@ -145,12 +176,14 @@
       font-size: 13px;
     }
 
-    .close {
-      position: absolute;
-      right: 12px;
-      top: 8px;
-      cursor: pointer;
-      font-size: 22px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
@@ -163,13 +196,11 @@
 
 <div class="container">
 
-<!-- SEARCH -->
 <div class="search-wrap">
   <input class="search-box" id="searchInput" placeholder="Search player..." onkeyup="searchPlayer()">
   <span class="search-icon">🔍</span>
 </div>
 
-<!-- GAMEMODES -->
 <div class="gm-bar">
   <button class="gm-btn" onclick="showMode('all')">All</button>
   <button class="gm-btn" onclick="showMode('Vanilla')">Vanilla</button>
@@ -296,6 +327,7 @@ function searchPlayer() {
   });
 }
 
+/* FIXED GAMEMODE FILTER */
 function showMode(mode) {
   let rows = document.querySelectorAll("#tierTable tbody tr");
 
@@ -304,9 +336,12 @@ function showMode(mode) {
     SMP:6,Sword:7,Axe:8,Mace:9
   };
 
-  let cols = [2,3,4,5,6,7,8,9];
-
   rows.forEach(row => {
+
+    // reset all columns
+    for (let i = 2; i <= 9; i++) {
+      if (row.cells[i]) row.cells[i].style.display = "";
+    }
 
     if (mode === "all") {
       row.style.display = "";
@@ -323,11 +358,11 @@ function showMode(mode) {
 
     row.style.display = "";
 
-    cols.forEach(c => {
-      if (row.cells[c]) {
-        row.cells[c].style.display = (c === col) ? "" : "none";
+    for (let i = 2; i <= 9; i++) {
+      if (i !== col && row.cells[i]) {
+        row.cells[i].style.display = "none";
       }
-    });
+    }
   });
 }
 
