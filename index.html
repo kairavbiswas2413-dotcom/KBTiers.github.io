@@ -19,38 +19,38 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
       padding: 20px;
     }
 
-    .card {
+    .player {
       background: #111827;
       padding: 15px;
-      margin: 10px 0;
+      margin: 12px 0;
       border-radius: 10px;
     }
 
     .top {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 15px;
+      margin-bottom: 12px;
     }
 
     .name {
       font-weight: bold;
+      font-size: 16px;
     }
 
     .region {
       color: #aaa;
+      font-size: 14px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      font-size: 13px;
     }
 
     .box {
@@ -58,6 +58,7 @@
       padding: 8px;
       border-radius: 6px;
       text-align: center;
+      font-size: 13px;
     }
 
     .HT { color: #ff4d4d; font-weight: bold; }
@@ -75,53 +76,51 @@
 <script>
 const gamemodes = ["Vanilla","UHC","POT","Nethpot","SMP","Sword","Axe","Mace"];
 
-const data = [
+const players = [
   {
     name: "KairavOP",
     region: "AS",
     stats: {
-      Vanilla: "HT4",
-      UHC: "HT5",
-      POT: "",
-      Nethpot: "HT4",
-      SMP: "HT5",
-      Sword: "LT4",
-      Axe: "HT4",
-      Mace: "LT3"
+      Vanilla:"HT4",
+      UHC:"HT5",
+      POT:"",
+      Nethpot:"HT4",
+      SMP:"HT5",
+      Sword:"LT4",
+      Axe:"HT4",
+      Mace:"LT3"
     }
   },
   {
     name: "NoxisCraft",
     region: "AS",
     stats: {
-      Vanilla: "",
-      UHC: "",
-      POT: "",
-      Nethpot: "LT4",
-      SMP: "",
-      Sword: "HT5",
-      Axe: "",
-      Mace: ""
+      Vanilla:"",
+      UHC:"",
+      POT:"",
+      Nethpot:"LT4",
+      SMP:"",
+      Sword:"HT5",
+      Axe:"",
+      Mace:""
     }
   }
 ];
 
 const app = document.getElementById("app");
 
-data.forEach(p => {
+players.forEach(p => {
 
   const div = document.createElement("div");
-  div.className = "card";
+  div.className = "player";
 
   let grid = gamemodes.map(g => {
-    let val = p.stats[g];
+    let v = p.stats[g];
 
-    if(!val) {
-      return `<div class="box">—</div>`;
-    }
+    if(!v) return `<div class="box">—</div>`;
 
-    return `<div class="box ${val.startsWith("HT") ? "HT" : "LT"}">
-      ${g}<br>${val}
+    return `<div class="box ${v.startsWith("HT") ? "HT" : "LT"}">
+      ${g}<br>${v}
     </div>`;
   }).join("");
 
