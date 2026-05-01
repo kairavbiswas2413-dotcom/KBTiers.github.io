@@ -9,44 +9,90 @@
       color: white;
       text-align: center;
     }
-    h1 {
-      color: #38bdf8;
-    }
+
+    h1 { color: #38bdf8; }
+
     .tier {
-      margin: 20px;
+      display: flex;
+      align-items: center;
+      margin: 10px;
       padding: 10px;
       border-radius: 10px;
     }
-    .s { background: #ff4d4d; }
-    .a { background: #ff944d; }
-    .b { background: #ffd24d; }
-    .player {
-      margin: 5px;
-      padding: 5px;
-      background: rgba(0,0,0,0.3);
+
+    .label {
+      width: 80px;
+      font-weight: bold;
+    }
+
+    .dropzone {
+      flex: 1;
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      min-height: 60px;
+      border: 2px dashed #444;
+    }
+
+    .item {
+      padding: 8px;
+      background: #1e293b;
       border-radius: 5px;
+      cursor: grab;
+    }
+
+    .pool {
+      margin-top: 20px;
+      padding: 10px;
+      border: 2px solid #555;
     }
   </style>
 </head>
 
 <body>
-  <h1>🔥 KBTiers - PvP Rankings 🔥</h1>
+  <h1>🔥 KBTiers 🔥</h1>
 
-  <div class="tier s">
-    <h2>S Tier</h2>
-    <div class="player">Player1</div>
-    <div class="player">Player2</div>
+  <div class="tier" style="background:#ff4d4d;">
+    <div class="label">S</div>
+    <div class="dropzone"></div>
   </div>
 
-  <div class="tier a">
-    <h2>A Tier</h2>
-    <div class="player">Player3</div>
+  <div class="tier" style="background:#ff944d;">
+    <div class="label">A</div>
+    <div class="dropzone"></div>
   </div>
 
-  <div class="tier b">
-    <h2>B Tier</h2>
-    <div class="player">Player4</div>
+  <div class="tier" style="background:#ffd24d;">
+    <div class="label">B</div>
+    <div class="dropzone"></div>
   </div>
+
+  <h2>Drag from here 👇</h2>
+  <div class="pool dropzone">
+    <div class="item" draggable="true">Player1</div>
+    <div class="item" draggable="true">Player2</div>
+    <div class="item" draggable="true">Player3</div>
+  </div>
+
+<script>
+let dragged;
+
+document.querySelectorAll('.item').forEach(item => {
+  item.addEventListener('dragstart', e => {
+    dragged = item;
+  });
+});
+
+document.querySelectorAll('.dropzone').forEach(zone => {
+  zone.addEventListener('dragover', e => {
+    e.preventDefault();
+  });
+
+  zone.addEventListener('drop', e => {
+    zone.appendChild(dragged);
+  });
+});
+</script>
 
 </body>
 </html>
