@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>KBTiers Pro</title>
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <title>KBTiers</title>
 
   <style>
     body {
@@ -20,135 +19,125 @@
     }
 
     .container {
-      max-width: 1000px;
+      max-width: 900px;
       margin: auto;
       padding: 20px;
     }
 
-    .tier {
-      display: flex;
-      margin: 8px 0;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #222;
-    }
-
-    .label {
-      width: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      background: #111827;
-    }
-
-    .dropzone {
-      flex: 1;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 10px;
-      min-height: 55px;
-      background: #1f2937;
-    }
-
     .card {
-      background: #111;
-      padding: 6px 10px;
-      border-radius: 8px;
-      cursor: grab;
+      background: #111827;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+    }
+
+    .top {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 15px;
     }
 
-    .card img {
-      width: 22px;
-      border-radius: 4px;
+    .name {
+      font-weight: bold;
     }
 
-    .HT1 { background:#ef4444; }
-    .LT1 { background:#f97316; }
-    .HT2 { background:#f59e0b; }
-    .LT2 { background:#eab308; }
-    .HT3 { background:#22c55e; }
-    .LT3 { background:#10b981; }
-    .HT4 { background:#3b82f6; }
-    .LT4 { background:#6366f1; }
-    .HT5 { background:#8b5cf6; }
-    .LT5 { background:#a855f7; }
+    .region {
+      color: #aaa;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .box {
+      background: #1f2937;
+      padding: 8px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .HT { color: #ff4d4d; font-weight: bold; }
+    .LT { color: #22c55e; font-weight: bold; }
 
   </style>
 </head>
 
 <body>
 
-<header>🏆 KBTiers Pro</header>
+<header>🏆 KBTiers Rankings</header>
 
-<div class="container" id="tiers"></div>
+<div class="container" id="app"></div>
 
 <script>
-const tiers = ["HT1","LT1","HT2","LT2","HT3","LT3","HT4","LT4","HT5","LT5"];
+const gamemodes = ["Vanilla","UHC","POT","Nethpot","SMP","Sword","Axe","Mace"];
 
-let players = JSON.parse(localStorage.getItem("kbtiers")) || [
-  {name:"KairavOP", img:"https://mc-heads.net/avatar/KairavOP", tier:"HT4"},
-  {name:"NoxisCraft", img:"https://mc-heads.net/avatar/NoxisCraft", tier:"LT4"},
-  {name:"Dexo_mine", img:"https://i.imgur.com/yourimage.png", tier:"HT4"},
-  {name:"iambishnu6451", img:"https://i.imgur.com/yourimage.png", tier:"LT5"},
-  {name:"akashsonu", img:"https://i.imgur.com/yourimage.png", tier:"LT4"}
+const data = [
+  {
+    name: "KairavOP",
+    region: "AS",
+    stats: {
+      Vanilla: "HT4",
+      UHC: "HT5",
+      POT: "",
+      Nethpot: "HT4",
+      SMP: "HT5",
+      Sword: "LT4",
+      Axe: "HT4",
+      Mace: "LT3"
+    }
+  },
+  {
+    name: "NoxisCraft",
+    region: "AS",
+    stats: {
+      Vanilla: "",
+      UHC: "",
+      POT: "",
+      Nethpot: "LT4",
+      SMP: "",
+      Sword: "HT5",
+      Axe: "",
+      Mace: ""
+    }
+  }
 ];
 
-function save() {
-  localStorage.setItem("kbtiers", JSON.stringify(players));
-}
+const app = document.getElementById("app");
 
-function render() {
-  const container = document.getElementById("tiers");
-  container.innerHTML = "";
+data.forEach(p => {
 
-  tiers.forEach(t => {
-    const row = document.createElement("div");
-    row.className = "tier";
+  const div = document.createElement("div");
+  div.className = "card";
 
-    row.innerHTML = `
-      <div class="label ${t}">${t}</div>
-      <div class="dropzone" id="${t}"></div>
-    `;
+  let grid = gamemodes.map(g => {
+    let val = p.stats[g];
 
-    container.appendChild(row);
-  });
+    if(!val) {
+      return `<div class="box">—</div>`;
+    }
 
-  players.forEach(p => {
-    const el = document.createElement("div");
-    el.className = "card";
-    el.innerHTML = `<img src="${p.img}"> ${p.name}`;
-    document.getElementById(p.tier).appendChild(el);
-  });
+    return `<div class="box ${val.startsWith("HT") ? "HT" : "LT"}">
+      ${g}<br>${val}
+    </div>`;
+  }).join("");
 
-  enableDrag();
-}
+  div.innerHTML = `
+    <div class="top">
+      <div class="name">${p.name}</div>
+      <div class="region">${p.region}</div>
+    </div>
 
-function enableDrag() {
-  document.querySelectorAll(".dropzone").forEach(zone => {
-    new Sortable(zone, {
-      group: "tiers",
-      animation: 150,
-      onAdd: function(evt) {
-        const name = evt.item.innerText.trim();
-        const newTier = evt.to.id;
+    <div class="grid">
+      ${grid}
+    </div>
+  `;
 
-        players.forEach(p => {
-          if(p.name === name) p.tier = newTier;
-        });
-
-        save();
-      }
-    });
-  });
-}
-
-render();
+  app.appendChild(div);
+});
 </script>
 
 </body>
